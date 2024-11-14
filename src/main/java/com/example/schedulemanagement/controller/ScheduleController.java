@@ -5,11 +5,16 @@ import com.example.schedulemanagement.dto.ScheduleResponseDto;
 import com.example.schedulemanagement.dto.UpdateScheduleRequestDto;
 import com.example.schedulemanagement.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @RestController
 @RequestMapping("/schedules")
@@ -30,10 +35,10 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedules() {
-        List<ScheduleResponseDto> allSchedules = scheduleService.findAllSchedules();
+    public ResponseEntity<Page<ScheduleResponseDto>> makeSchedulePage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Page<ScheduleResponseDto> schedulePage = scheduleService.makeSchedulePage(page, size);
 
-        return new ResponseEntity<> (allSchedules, HttpStatus.OK);
+        return new ResponseEntity<> (schedulePage, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
