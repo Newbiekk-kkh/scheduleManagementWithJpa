@@ -1,5 +1,6 @@
 package com.example.schedulemanagement.service;
 
+import com.example.schedulemanagement.config.PasswordEncoder;
 import com.example.schedulemanagement.dto.LoginResponseDto;
 import com.example.schedulemanagement.dto.SignUpResponseDto;
 import com.example.schedulemanagement.dto.UserResponseDto;
@@ -23,10 +24,13 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public SignUpResponseDto signUp(String username, String password ,String email) {
-        User user = new User(username, password, email);
+        String encodedPassword = passwordEncoder.encode(password);
+
+        User user = new User(username, encodedPassword, email);
 
         User savedUser = userRepository.save(user);
 
@@ -58,10 +62,12 @@ public class UserService {
     public LoginResponseDto login(@NotBlank String email, @NotNull String password) throws PasswordMismatchException {
         User user = userRepository.findUserByEmailOrElseThrow(email);
 
-        if (!password.equals(user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new PasswordMismatchException("비밀번호가 틀립니다.", HttpStatus.UNAUTHORIZED);
         }
 
+        log.info(password);
+        log.info(user.getPassword());
         return new LoginResponseDto(user.getId(), user.getEmail());
     }
 }
