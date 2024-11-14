@@ -5,8 +5,13 @@ import com.example.schedulemanagement.entity.Schedule;
 import com.example.schedulemanagement.entity.User;
 import com.example.schedulemanagement.repository.ScheduleRepository;
 import com.example.schedulemanagement.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +19,8 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
 
-    public ScheduleResponseDto save(String title, String contents, String username) {
+    @Transactional
+    public ScheduleResponseDto saveSchedule(String title, String contents, String username) {
         User findUser = userRepository.findUserByUsernameOrElseThrow(username);
 
         Schedule schedule = new Schedule(title, contents);
@@ -23,5 +29,34 @@ public class ScheduleService {
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents());
+    }
+
+    public List<ScheduleResponseDto> findAllSchedules() {
+        return scheduleRepository
+                .findAll()
+                .stream()
+                .map(ScheduleResponseDto::toDto)
+                .toList();
+    }
+
+    public ScheduleResponseDto findScheduleById(Long id) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
+    }
+
+    @Transactional
+    public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        findSchedule.updateSchedule(title, contents);
+
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
+    }
+
+    @Transactional
+    public void deleteSchedule(Long id) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        scheduleRepository.delete(findSchedule);
     }
 }

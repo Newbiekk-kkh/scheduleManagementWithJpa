@@ -20,4 +20,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                 "Does not exists username = " + username )
                 );
     }
+
+    default User findUserByIdOrElseThrow(Long id) {
+        return findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Does not exists id = " + id )
+                );
+    }
 }

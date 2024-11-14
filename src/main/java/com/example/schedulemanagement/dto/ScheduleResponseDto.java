@@ -1,6 +1,8 @@
 package com.example.schedulemanagement.dto;
 
+import com.example.schedulemanagement.entity.Schedule;
 import lombok.Getter;
+import org.springframework.scheduling.annotation.Schedules;
 
 @Getter
 public class ScheduleResponseDto {
@@ -12,5 +14,9 @@ public class ScheduleResponseDto {
         this.id = id;
         this.title = title;
         this.contents = contents;
+    }
+
+    public static ScheduleResponseDto toDto(Schedule schedule) {
+        return new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContents());
     }
 }
