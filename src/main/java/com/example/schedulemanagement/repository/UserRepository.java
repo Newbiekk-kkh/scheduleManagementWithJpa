@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByUsername(String username);
+    Optional<User> findUserByEmail(String email);
 
     default User findUserByUsernameOrElseThrow(String username) {
         return findUserByUsername(username)
@@ -27,6 +28,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,
                                 "Does not exists id = " + id )
+                );
+    }
+
+    default User findUserByEmailOrElseThrow(String email) {
+        return findUserByEmail(email)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Does not exists email = " + email)
                 );
     }
 }

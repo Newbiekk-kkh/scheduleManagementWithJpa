@@ -1,18 +1,21 @@
 package com.example.schedulemanagement.controller;
 
-import com.example.schedulemanagement.dto.SignUpRequestDto;
-import com.example.schedulemanagement.dto.SignUpResponseDto;
-import com.example.schedulemanagement.dto.UserResponseDto;
+import com.example.schedulemanagement.dto.*;
+import com.example.schedulemanagement.exception.PasswordMismatchException;
 import com.example.schedulemanagement.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping ("/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -43,9 +46,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
+
