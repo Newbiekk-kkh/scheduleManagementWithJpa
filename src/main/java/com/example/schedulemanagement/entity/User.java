@@ -3,6 +3,9 @@ package com.example.schedulemanagement.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @Table(name = "user")
@@ -19,6 +22,17 @@ public class User extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Schedule> schedule = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comment = new ArrayList<>();
+
+    public static void remove(final EntityManager entityManager) {
+        User user = entityManager.find(User.class, 1L);
+        entityManager.remove(user);
+    }
 
     public User() {
     }

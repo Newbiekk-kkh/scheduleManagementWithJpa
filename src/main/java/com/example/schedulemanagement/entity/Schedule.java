@@ -3,6 +3,9 @@ package com.example.schedulemanagement.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @Table(name = "schedule")
@@ -20,6 +23,9 @@ public class Schedule extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
+    private List<Comment> comment = new ArrayList<>();
 
     public Schedule () {
     }
