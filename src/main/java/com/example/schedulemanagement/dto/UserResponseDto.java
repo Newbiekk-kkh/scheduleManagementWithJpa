@@ -2,12 +2,15 @@ package com.example.schedulemanagement.dto;
 
 import com.example.schedulemanagement.entity.Schedule;
 import com.example.schedulemanagement.entity.User;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 @Getter
 public class UserResponseDto {
     private final Long id;
+
     private final String username;
+
     private final String email;
 
     public UserResponseDto(Long id, String username, String email) {

@@ -21,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
+    public ResponseEntity<SignUpResponseDto> signUp(@Valid @RequestBody SignUpRequestDto requestDto) {
         SignUpResponseDto signUpResponseDto =
                 userService.signUp(
                         requestDto.getUsername(),
@@ -39,14 +39,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> findUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDto> findUserById(@Valid @PathVariable Long id) {
         UserResponseDto userResponseDto = userService.findUserById(id);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@Valid @PathVariable Long id) {
         userService.deleteUser(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

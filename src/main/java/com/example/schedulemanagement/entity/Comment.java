@@ -32,6 +32,10 @@ public class Comment extends BaseEntity {
         this.commentText = commentText;
     }
 
+    public void updateComment(@NotNull String commentText) {
+        this.commentText = commentText;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

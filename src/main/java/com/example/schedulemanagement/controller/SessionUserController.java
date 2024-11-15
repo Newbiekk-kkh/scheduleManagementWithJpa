@@ -39,7 +39,7 @@ public class SessionUserController {
 
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(@Valid HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
