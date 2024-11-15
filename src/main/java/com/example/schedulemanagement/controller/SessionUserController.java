@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SessionUserController {
     private final UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping("/login") // 로그인 로직
     public String login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request) throws PasswordMismatchException {
         log.info("로그인 요청: email={}", dto.getEmail());
             LoginResponseDto responseDto = userService.login(dto.getEmail(), dto.getPassword());
@@ -38,7 +38,7 @@ public class SessionUserController {
         }
 
 
-    @PostMapping("/logout")
+    @PostMapping("/logout") // 로그아웃 로직
     public String logout(@Valid HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 

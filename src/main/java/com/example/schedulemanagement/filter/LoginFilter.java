@@ -13,6 +13,7 @@ import java.io.IOException;
 
 @Slf4j
 public class LoginFilter implements Filter {
+    // 화이트 리스트 추가 (로그인이 안된 상태에서 인증 문제가 없도록 함)
     private static final String[] WHITE_LIST = {"/users/signup", "/login", "/"};
 
     @Override

@@ -13,6 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByUsername(String username);
     Optional<User> findUserByEmail(String email);
 
+    // Username으로 User 찾는데 없으면 404 NOT_FOUND 반환
     default User findUserByUsernameOrElseThrow(String username) {
         return findUserByUsername(username)
                 .orElseThrow(() ->
@@ -22,6 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 );
     }
 
+    // Id로 User 찾는데 없으면 404 NOT_FOUND 반환
     default User findUserByIdOrElseThrow(Long id) {
         return findById(id)
                 .orElseThrow(() ->
@@ -31,6 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 );
     }
 
+    // email으로 User 찾는데 없으면 404 NOT_FOUND 반환
     default User findUserByEmailOrElseThrow(String email) {
         return findUserByEmail(email)
                 .orElseThrow(() ->

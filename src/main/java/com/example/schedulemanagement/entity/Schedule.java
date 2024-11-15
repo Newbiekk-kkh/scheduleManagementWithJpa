@@ -24,8 +24,14 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // 영속성 전이 Schedule -> comment
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<Comment> comment = new ArrayList<>();
+
+    public static void remove(final EntityManager entityManager) {
+        Schedule schedule = entityManager.find(Schedule.class, 1L);
+        entityManager.remove(schedule);
+    }
 
     public Schedule () {
     }

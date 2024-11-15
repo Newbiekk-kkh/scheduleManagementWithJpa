@@ -16,6 +16,7 @@ public class CommentResponseDto {
         this.commentText = commentText;
     }
 
+    // Comment 객체를 Dto 형태로 변환
     public static CommentResponseDto toDto(Comment comment) {
         return new CommentResponseDto(comment.getSchedule().getId(), comment.getId(), comment.getCommentText());
     }

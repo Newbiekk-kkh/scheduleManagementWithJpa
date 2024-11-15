@@ -28,6 +28,7 @@ public class UserService {
 
     @Transactional
     public SignUpResponseDto signUp(String username, String password ,String email) {
+        // 가입할때 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = new User(username, encodedPassword, email);
@@ -62,6 +63,7 @@ public class UserService {
     public LoginResponseDto login(@NotBlank String email, @NotNull String password) throws PasswordMismatchException {
         User user = userRepository.findUserByEmailOrElseThrow(email);
 
+        // 기존 비밀번호와 암호화된 비밀번호 검증로직
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new PasswordMismatchException("비밀번호가 틀립니다.", HttpStatus.UNAUTHORIZED);
         }

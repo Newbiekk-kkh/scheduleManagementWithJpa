@@ -16,6 +16,7 @@ public class ScheduleResponseDto {
         this.contents = contents;
     }
 
+    // 일정 객체를 Dto 형태로 변환
     public static ScheduleResponseDto toDto(Schedule schedule) {
         return new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContents());
     }

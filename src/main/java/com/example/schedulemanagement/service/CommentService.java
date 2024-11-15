@@ -26,6 +26,7 @@ public class CommentService {
     private final HttpSession session;
 
     @Transactional
+    // 세이브 comment 로직
     public CommentResponseDto saveComment(Long scheduleId, String commentText) {
         Long userId = getLoginUserId();
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
@@ -72,6 +73,7 @@ public class CommentService {
         return loginUser.getId();
     }
 
+    // 로그인된 아이디와 Comment 작성자가 같을때만 관리 가능
     private void validateUserPermission(Comment comment) {
         Long userId = getLoginUserId();
         if (!comment.getUser().getId().equals(userId)) {

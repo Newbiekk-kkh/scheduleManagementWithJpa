@@ -26,7 +26,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
     private final HttpSession session;
 
-    @PostMapping
+    @PostMapping // 일정 작성
     public ResponseEntity<ScheduleResponseDto> saveSchedule(@Valid @RequestBody CreateScheduleRequestDto requestDto) {
         String username = ((UserResponseDto) session.getAttribute("loginUser")).getUsername();
         ScheduleResponseDto scheduleResponseDto =
@@ -39,28 +39,28 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping // 일정 페이징 조회
     public ResponseEntity<Page<ScheduleResponseDto>> makeSchedulePage(@Valid @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Page<ScheduleResponseDto> schedulePage = scheduleService.makeSchedulePage(page, size);
 
         return new ResponseEntity<> (schedulePage, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // 단일 일정 조회
     public ResponseEntity<ScheduleResponseDto> findScheduleById(@Valid @PathVariable Long id) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.findScheduleById(id);
 
         return new ResponseEntity<> (scheduleResponseDto, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}") // 일정 수정
     public ResponseEntity<ScheduleResponseDto> updateSchedule(@Valid @PathVariable Long id, @RequestBody UpdateScheduleRequestDto requestDto) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(id, requestDto.getTitle(), requestDto.getContents());
 
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // 일정 삭제
     public ResponseEntity<Void> deleteSchedule(@Valid @PathVariable Long id) {
         scheduleService.deleteSchedule(id);
 

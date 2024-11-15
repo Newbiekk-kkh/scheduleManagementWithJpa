@@ -19,28 +19,28 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping
+    @PostMapping // 댓글 작성
     public ResponseEntity<CommentResponseDto> saveComment(@Valid @RequestBody CreateCommentRequestDto requestDto) {
         CommentResponseDto commentResponseDto = commentService.saveComment(requestDto.getScheduleId(), requestDto.getCommentText());
 
         return new ResponseEntity<>(commentResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping // 댓글 전체 조회
     public ResponseEntity<List<CommentResponseDto>> viewAllComment() {
         List<CommentResponseDto> commentResponseDtosList = commentService.viewAllcomment();
 
         return new ResponseEntity<>(commentResponseDtosList, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id, @RequestBody UpdateCommentRequestDto requestDto) {
+    @PatchMapping("/{id}") // 댓글 수정
+    public ResponseEntity<CommentResponseDto> updateComment(@Valid @PathVariable Long id, @RequestBody UpdateCommentRequestDto requestDto) {
         CommentResponseDto commentResponseDto = commentService.updateComment(id, requestDto.getCommentText());
 
         return new ResponseEntity<>(commentResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // 댓글 삭제
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
 

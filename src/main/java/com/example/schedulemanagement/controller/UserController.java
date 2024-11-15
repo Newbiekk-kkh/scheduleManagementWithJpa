@@ -20,7 +20,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("/signup") // 회원가입
     public ResponseEntity<SignUpResponseDto> signUp(@Valid @RequestBody SignUpRequestDto requestDto) {
         SignUpResponseDto signUpResponseDto =
                 userService.signUp(
@@ -31,21 +31,21 @@ public class UserController {
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping // 회원 조회
     public ResponseEntity<List<UserResponseDto>> findAllUser() {
         List<UserResponseDto> userResponseDtoList = userService.findAllUsers();
 
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // 단일 회원 조회
     public ResponseEntity<UserResponseDto> findUserById(@Valid @PathVariable Long id) {
         UserResponseDto userResponseDto = userService.findUserById(id);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // 회원 삭제
     public ResponseEntity<Void> deleteUser(@Valid @PathVariable Long id) {
         userService.deleteUser(id);
 

@@ -23,9 +23,11 @@ public class User extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String email;
 
+    // 영속성 전이 user -> schedule
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Schedule> schedule = new ArrayList<>();
 
+    // 영속성 전이 user -> comment
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comment = new ArrayList<>();
 

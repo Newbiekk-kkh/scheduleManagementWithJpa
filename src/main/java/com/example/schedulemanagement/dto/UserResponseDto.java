@@ -19,6 +19,7 @@ public class UserResponseDto {
         this.email = email;
     }
 
+    // User 객체를 Dto 형태로 변환
     public static UserResponseDto toDto(User user) {
         return new UserResponseDto(user.getId(), user.getUsername(), user.getEmail());
     }

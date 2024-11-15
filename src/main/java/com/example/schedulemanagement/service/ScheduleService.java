@@ -75,6 +75,7 @@ public class ScheduleService {
         return loginUser.getId();
     }
 
+    // 로그인된 아이디와 Schedule 작성자가 같을때만 관리 가능
     private void validateUserPermission(Schedule schedule) {
         Long userId = getLoginUserId();
         if (!schedule.getUser().getId().equals(userId)) {
